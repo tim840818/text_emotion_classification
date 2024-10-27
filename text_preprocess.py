@@ -6,6 +6,8 @@ nltk.download('stopwords')
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
 
+import torch
+from torch.utils.data import Dataset, TensorDataset
 
 def clean_text(text):
     text = re.sub(r"[^\w\s']",'',text, re.UNICODE)
@@ -92,3 +94,33 @@ def get_embeddingdict_glove(tokenizer, path_to_glove_file):
         'weights': [embedding_matrix],
     }
     return embedding_dict
+
+## text preprocessing for torch
+class CustomDataset(Dataset):
+    def __init__(self, texts, labels, tokenizer, max_len):
+        self.texts = texts.to_list()
+        self.labels = labels
+        self.tokenizer = tokenizer
+        self.max_len = max_len
+
+    def __len__(self):
+        return len(self.texts)
+
+    def __getitem__(self, idx):
+        text = self.texts[idx]
+        label = self.labels[idx]
+        encoding = self.tokenizer.encode_plus(
+            text,
+            add_special_tokens=True,
+            max_length=self.max_len,
+            return_token_type_ids=False,
+            padding='max_length',
+            return_attention_mask=True,
+            return_tensors='pt',
+            truncation=True
+        )
+        return {
+            'input_ids': encoding['input_ids'].flatten(),
+            'attention_mask': encoding['attention_mask'].flatten(),
+            'labels': torch.tensor(label, dtype=torch.long)
+        }
