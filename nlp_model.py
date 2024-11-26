@@ -78,13 +78,12 @@ def train_model(model, train_loader, device, epoch, epochs=12, optimizer=None, l
     train_loss = 0
     for batch_idx, batch in enumerate(train_loader):
         batch = {k: v.to(device) for k, v in batch.items()}
+        optimizer.zero_grad()
         outputs = model(**batch)
         loss = outputs.loss
         loss.backward()
-
         optimizer.step()
         lr_scheduler.step() if lr_scheduler is not None else None
-        optimizer.zero_grad()
 
         train_loss += loss.item()
 
