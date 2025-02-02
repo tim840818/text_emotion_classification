@@ -23,7 +23,7 @@ The training corpus is tokenized into 9531 unique tokens (words). Each sample ca
 ### Padding sequences + Word-to-Vector + LSTM model
 Instead of bag of words, each sample is now padded into a sequence of tokens with a specific padding length of 13 (third quartile of sentence length distribution).
 
-<img src="sentence_length_distribution.png" alt="" width="350">
+<img src="sentence_length_distribution.png" alt="" width="600px">
 
 Each token is represented as a 50-dimension vector, and an embedding matrix in the shape of 9531 x 50 is built.
 
