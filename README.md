@@ -33,7 +33,7 @@ The dataset is first processed with the tokenizer from DistilBERT and further us
 
 |          | Bag-of-Words + DNN | GloVe + LSTM | DistilBERT |
 |----------|--------------------|--------------|------------|
-| Accuracy | 0.89               | 0.82         | 0.86       |
+| Accuracy | **0.89**           | 0.82         | 0.86       |
 
 For the bag of words method, we obtain 0.89 accuracy. The accuracy is fairly good, but one of the disadvantages is obvious that it requires too many spaces and is too sparse.
 
