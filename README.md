@@ -21,7 +21,11 @@ Two methods shown below are developed to train the dataset.
 The training corpus is tokenized into 9531 unique tokens (words). Each sample can be represented as a 9531-dimension vector representing the occurrence numbers of tokens. A Deep Neural Network (DNN) is constructed with two Dense layers and one output layer.
 
 ### Padding sequences + Word-to-Vector + LSTM model
-Instead of bag of words, each sample is now padded into a sequence of tokens with a specific padding length of 13. Each token is represented as a 50-dimension vector, and an embedding matrix in the shape of 9531 x 50 is built.
+Instead of bag of words, each sample is now padded into a sequence of tokens with a specific padding length of 13 (third quartile of sentence length distribution).
+
+<img src="sentence_length_distribution.png" alt="" width="350">
+
+Each token is represented as a 50-dimension vector, and an embedding matrix in the shape of 9531 x 50 is built.
 
 Each sample is processed through an embedding layer and embedded into an array with the shape (13, 50). It is then passed through a masking layer, two LSTM layers, and an output layer for training. Finally, we tune this model using Hyperband.
 
